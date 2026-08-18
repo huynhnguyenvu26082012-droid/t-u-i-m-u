@@ -5,9 +5,12 @@
 }
 
 body {
-  background-color: #121212;
+  /* Hình nền Liên Quân HD kèm lớp phủ tối mờ */
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)),
+              url('https://cdna.artstation.com/p/assets/images/images/028/804/412/large/arena-of-valor-aov-wallpaper.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: #fff;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,92 +18,127 @@ body {
   padding: 15px;
 }
 
+/* Khung chính phong cách Gaming Liên Quân */
 .main-container {
   text-align: center;
-  background: #1e1e1e;
-  padding: 25px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  background: rgba(20, 25, 35, 0.92);
+  padding: 30px 20px;
+  border-radius: 16px;
+  border: 2px solid #ffcc00;
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3), inset 0 0 15px rgba(0,0,0,0.8);
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
+  backdrop-filter: blur(8px);
 }
 
 h2 {
-  font-size: 20px;
-  color: #ffcc00;
-  margin-bottom: 5px;
+  font-size: 22px;
+  color: #00f2fe;
+  text-shadow: 0 0 10px #00f2fe, 0 0 20px #4facfe;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .sub-title {
   font-size: 13px;
-  color: #aaa;
-  margin-bottom: 18px;
+  color: #e0e0e0;
+  margin-bottom: 20px;
 }
 
+/* Ô nhập mã Key chuẩn Cyber */
 .input-box input {
   width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background: #2b2b2b;
+  padding: 13px;
+  border-radius: 8px;
+  border: 2px solid #ff0055;
+  background: rgba(10, 10, 15, 0.9);
   color: #fff;
   text-align: center;
-  font-size: 15px;
-  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
   outline: none;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+  transition: all 0.3s ease;
 }
 
-/* Lưới 6 Túi Mù */
+.input-box input:focus {
+  border-color: #00f2fe;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+}
+
+/* Lưới 6 Túi Mù dạng Thẻ Bài Lắc Động */
 .blind-bag-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 
 .blind-bag {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(145deg, #ff0055, #ff5000);
+  border: 2px solid #ffcc00;
   border-radius: 12px;
-  padding: 15px 10px;
+  padding: 18px 10px;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(255, 75, 43, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
   user-select: none;
-  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Hiệu ứng Rung Lắc & Phát Sáng khi di chuột vào túi */
 .blind-bag:hover {
-  transform: translateY(-4px);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ffcc00, 0 0 30px #ff0055;
+  animation: shake 0.5s infinite ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: scale(1.05) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(-3deg); }
+  75% { transform: scale(1.05) rotate(3deg); }
+  100% { transform: scale(1.05) rotate(0deg); }
 }
 
 .bag-icon {
-  font-size: 35px;
+  font-size: 38px;
   display: block;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
 }
 
 .bag-text {
-  font-weight: bold;
-  font-size: 12px;
+  font-weight: 800;
+  font-size: 13px;
   margin-top: 6px;
   color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  letter-spacing: 0.5px;
 }
 
-/* Modal Popup */
+/* Modal Popup Bill Nhận Quà */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.88);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
   padding: 15px;
+  backdrop-filter: blur(5px);
 }
 
 .modal-content {
-  background: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
+  background: #181c24;
+  color: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+  max-width: 420px;
   width: 100%;
   position: relative;
   text-align: left;
@@ -110,8 +148,14 @@ h2 {
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   cursor: pointer;
-  color: #333;
+  color: #ff0055;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #fff;
+  transform: scale(1.2);
 }
