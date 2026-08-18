@@ -1,5 +1,5 @@
 // Dán link Google Apps Script mới dành riêng cho Túi Mù vào đây
-const GAS_API_URL = "URL_GOOGLE_APPS_SCRIPT_CỦA_BẠN"; 
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxM5BG8VR2B_4HTuoijLQVT9Cx5yPLKagxMMvDX9St_26HlzmUTKT0_weJnD0glAuOdjA/exec"; 
 
 async function moTuiMu() {
   const inputKey = document.getElementById('inputKey');
