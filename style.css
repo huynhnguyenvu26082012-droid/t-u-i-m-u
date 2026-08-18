@@ -5,11 +5,9 @@
 }
 
 body {
-  /* Hình nền Liên Quân HD kèm lớp phủ tối mờ */
-  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)),
-              url('https://cdna.artstation.com/p/assets/images/images/028/804/412/large/arena-of-valor-aov-wallpaper.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
+  /* Nền màu sáng nhã nhặn, làm nổi bật hiệu ứng đèn LED của túi mù */
+  background: #f0f2f5;
+  color: #1a1a1a;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
@@ -18,103 +16,125 @@ body {
   padding: 15px;
 }
 
-/* Khung chính phong cách Gaming Liên Quân */
+/* Khung chính sang trọng, nổi bật trên nền trắng */
 .main-container {
   text-align: center;
-  background: rgba(20, 25, 35, 0.92);
+  background: #ffffff;
   padding: 30px 20px;
-  border-radius: 16px;
-  border: 2px solid #ffcc00;
-  box-shadow: 0 0 25px rgba(255, 204, 0, 0.3), inset 0 0 15px rgba(0,0,0,0.8);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e8ed;
   width: 100%;
   max-width: 480px;
-  backdrop-filter: blur(8px);
 }
 
 h2 {
   font-size: 22px;
-  color: #00f2fe;
-  text-shadow: 0 0 10px #00f2fe, 0 0 20px #4facfe;
+  color: #d63031;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 800;
 }
 
 .sub-title {
   font-size: 13px;
-  color: #e0e0e0;
+  color: #636e72;
   margin-bottom: 20px;
 }
 
-/* Ô nhập mã Key chuẩn Cyber */
+/* Ô nhập Key nổi bật */
 .input-box input {
   width: 100%;
   padding: 13px;
-  border-radius: 8px;
-  border: 2px solid #ff0055;
-  background: rgba(10, 10, 15, 0.9);
-  color: #fff;
+  border-radius: 10px;
+  border: 2px solid #00b894;
+  background: #f8f9fa;
+  color: #2d3436;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
   margin-bottom: 22px;
   outline: none;
-  box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
   transition: all 0.3s ease;
 }
 
 .input-box input:focus {
-  border-color: #00f2fe;
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+  border-color: #0984e3;
+  box-shadow: 0 0 12px rgba(9, 132, 227, 0.3);
+  background: #fff;
 }
 
-/* Lưới 6 Túi Mù dạng Thẻ Bài Lắc Động */
+/* Lưới 6 Túi Mù */
 .blind-bag-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 
+/* Túi Mù Đổi Màu Nháy Đèn LED (Xanh - Đỏ - Tím - Vàng) */
 .blind-bag {
-  background: linear-gradient(145deg, #ff0055, #ff5000);
-  border: 2px solid #ffcc00;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 18px 10px;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
   user-select: none;
   position: relative;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
+  /* Chạy hiệu ứng chuyển màu RGB ngẫu nhiên */
+  animation: ledRgb 4s infinite linear, shakeIdle 3s infinite ease-in-out;
 }
 
-/* Hiệu ứng Rung Lắc & Phát Sáng khi di chuột vào túi */
+/* Hiệu ứng Đèn LED ma mị liên tục chuyển màu */
+@keyframes ledRgb {
+  0% {
+    background: linear-gradient(135deg, #ff0055, #ff5000);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+  }
+  25% {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+  }
+  50% {
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+  }
+  75% {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+  }
+  100% {
+    background: linear-gradient(135deg, #ff0055, #ff5000);
+    box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+  }
+}
+
+/* Hiệu ứng Lắc Nhẹ khi rê chuột vào túi */
 .blind-bag:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ffcc00, 0 0 30px #ff0055;
-  animation: shake 0.5s infinite ease-in-out;
+  transform: scale(1.08);
+  animation: ledRgb 1.5s infinite linear, shakeHover 0.4s infinite ease-in-out;
 }
 
-@keyframes shake {
-  0% { transform: scale(1.05) rotate(0deg); }
-  25% { transform: scale(1.05) rotate(-3deg); }
-  75% { transform: scale(1.05) rotate(3deg); }
-  100% { transform: scale(1.05) rotate(0deg); }
+@keyframes shakeHover {
+  0% { transform: scale(1.08) rotate(0deg); }
+  25% { transform: scale(1.08) rotate(-4deg); }
+  75% { transform: scale(1.08) rotate(4deg); }
+  100% { transform: scale(1.08) rotate(0deg); }
 }
 
 .bag-icon {
   font-size: 38px;
   display: block;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .bag-text {
   font-weight: 800;
   font-size: 13px;
   margin-top: 6px;
-  color: #fff;
-  text-shadow: 1px 1px 3px #000;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
   letter-spacing: 0.5px;
 }
 
@@ -122,22 +142,22 @@ h2 {
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.88);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
   padding: 15px;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background: #181c24;
-  color: #fff;
+  background: #ffffff;
+  color: #2d3436;
   padding: 22px;
-  border-radius: 14px;
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+  border-radius: 16px;
+  border: 2px solid #00b894;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   max-width: 420px;
   width: 100%;
   position: relative;
@@ -151,11 +171,10 @@ h2 {
   font-size: 26px;
   font-weight: bold;
   cursor: pointer;
-  color: #ff0055;
+  color: #d63031;
   transition: 0.2s;
 }
 
 .close-btn:hover {
-  color: #fff;
   transform: scale(1.2);
 }
