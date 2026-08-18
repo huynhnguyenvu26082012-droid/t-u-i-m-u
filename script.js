@@ -1,78 +1,80 @@
-// Dán link Google Apps Script mới dành riêng cho Túi Mù vào đây
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxM5BG8VR2B_4HTuoijLQVT9Cx5yPLKagxMMvDX9St_26HlzmUTKT0_weJnD0glAuOdjA/exec"; 
+// DÁN LINK GOOGLE APPS SCRIPT CỦA BẠN VÀO GIỮA 2 DẤU NGOẶC KÉP NÀY:
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx.../exec";
 
-async function moTuiMu() {
-  const inputKey = document.getElementById('inputKey');
-  const keyVal = inputKey ? inputKey.value.trim() : '';
+function moTuiMu(bagIndex) {
+  const keyInput = document.getElementById('inputKey').value.trim();
 
-  if (!keyVal) {
+  if (!keyInput) {
     alert("Vui lòng nhập Mã Key trước khi mở túi!");
     return;
   }
 
-  const bagElement = document.getElementById('blindBag');
-
-  // 1. Rung lắc ngay
-  bagElement.classList.add('shaking');
-
-  try {
-    // 2. Gửi request
-    const response = await fetch(GAS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ key: keyVal, action: 'openBlindBag' })
-    });
-    
-    const data = await response.json();
-
+  // Gọi API kiểm tra Key và lấy Acc
+  fetch(GAS_API_URL, {
+    method: 'POST',
+    mode: 'cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ key: keyInput })
+  })
+  .then(response => response.json())
+  .then(data => {
     if (data.status === 'success') {
-      // 3. Xé bao
-      bagElement.classList.remove('shaking');
-      bagElement.classList.add('opening');
-
-      // 4. Mở hóa đơn
-      setTimeout(() => {
-        hienThiHoaDon(data);
-        bagElement.classList.remove('opening');
-        if (inputKey) inputKey.value = ''; // Xóa ô nhập sau khi mở thành công
-      }, 500);
-
+      hienThiHoaDon(data);
     } else {
-      bagElement.classList.remove('shaking');
-      alert(data.message || "Key không hợp lệ hoặc đã sử dụng!");
+      alert(data.message || 'Mã Key không hợp lệ hoặc đã dùng!');
     }
-
-  } catch (error) {
-    bagElement.classList.remove('shaking');
-    alert("Lỗi kết nối máy chủ!");
-  }
+  })
+  .catch(error => {
+    console.error('Lỗi:', error);
+    alert('Không thể kết nối đến máy chủ! Vui lòng kiểm tra lại.');
+  });
 }
 
 function hienThiHoaDon(data) {
   const invoiceContainer = document.getElementById('invoicePrint');
   
+  // 1. Pháo hoa
+  if (typeof confetti === 'function') {
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+  }
+
+  // 2. Tiếng vỗ tay
+  try {
+    const victoryAudio = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
+    victoryAudio.volume = 0.6;
+    victoryAudio.play();
+  } catch (e) {}
+
+  // 3. Hiển thị Popup Chúc Mừng chuyên cho Acc TTT
   invoiceContainer.innerHTML = `
-<pre style="white-space: pre-wrap; font-family: monospace; margin:0; font-size: 12px; color: #000;">
-========================================
-         HÓA ĐƠN DỊCH VỤ & TÚI MÙ
-========================================
-Mã đơn hàng : ${data.orderId || 'HD' + Date.now()}
-Ngày giao   : ${new Date().toLocaleString('vi-VN')}
-Khách hàng  : ${data.customerName || 'Khách hàng'}
+    <div style="text-align: center; margin-bottom: 12px;">
+      <h2 style="color: #ff0055; font-size: 20px; margin: 0; text-transform: uppercase;">
+        🎉 CHÚC MỪNG BẠN XÉ TRÚNG 🎉
+      </h2>
+      <div style="font-size: 16px; color: #d63031; font-weight: bold; margin-top: 6px; background: #ffeaa7; padding: 8px; border-radius: 6px; border: 2px dashed #fdcb6e;">
+        🌟 ${data.skinName || 'NICK LQMB TTT VIP'} 🌟
+      </div>
+    </div>
 
-CHI TIẾT DỊCH VỤ:
-1 . Mở Túi Mù Ngẫu Nhiên | Giá: 30,000 VNĐ
- + TK: ${data.account}
- + MK: ${data.password}
-${data.mail ? ' + Mail: ' + data.mail : ''}
-${data.passMail ? ' + PassMail: ' + data.passMail : ''}
-
-TỔNG CỘNG TIỀN THANH TOÁN : 30,000 VNĐ
+<pre style="white-space: pre-wrap; font-family: monospace; margin:0; font-size: 12px; color: #000; background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px dashed #ccc;">
 ========================================
-⚠️ LƯU Ý BẢO HÀNH:
-1. Đăng nhập, thêm SĐT & ĐỔI PASS ngay.
-2. Đúng 30 ngày nhắn lại Shop hỗ trợ gỡ mail temp.
-3. Shop bảo hành 100% trong 30 ngày theo thỏa thuận.
+       THÔNG TIN TÀI KHOẢN TÚI MÙ
+========================================
+Mã đơn hàng   : ${data.orderId || 'HD' + Date.now()}
+Trạng thái    : ĐÃ XÁC NHẬN KEY
+Loại Tài Khoản: TTT (ĐÃ ĐẦY ĐỦ THÔNG TIN)
+
+CHI TIẾT PHẦN THƯỞNG:
+ + Trang phục  : ${data.skinName || 'Acc Ngẫu Nhiên'}
+ + Tài khoản   : ${data.account}
+ + Mật khẩu    : ${data.password}
+
+CẦN THU THÊM   : 0 VNĐ
+========================================
+⚠️ LƯU Ý DÙNG ACC TTT:
+1. Đăng nhập vào game trải nghiệm ngay.
+2. Không cần thêm mail/SĐT tránh bị dính checkpoint.
+3. Shop bảo hành 100% tài khoản chuẩn TTT.
 ========================================
 </pre>
   `;
