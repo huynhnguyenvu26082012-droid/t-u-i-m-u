@@ -1,5 +1,5 @@
 // DÁN LINK GOOGLE APPS SCRIPT CỦA BẠN VÀO GIỮA 2 DẤU NGOẶC KÉP NÀY:
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx.../exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzMKjA80RJV1qtE0hSzVL83eIobXgthjUwgiwvNd0EvoAUc9N7S6tZlG52k5uJldH6JWg/exec";
 
 function moTuiMu(bagIndex) {
   const keyInput = document.getElementById('inputKey').value.trim();
